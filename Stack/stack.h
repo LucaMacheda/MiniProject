@@ -20,6 +20,4 @@ void push(Stack* s, void* data);
 
 void pop(Stack* s, void* out_value);
 
-//void display(Stack* s);
-
 void destroyStack(Stack* s);

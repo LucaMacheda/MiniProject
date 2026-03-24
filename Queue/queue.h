@@ -23,6 +23,4 @@ void enqueue(Queue* q, void* value);
 
 void dequeue(Queue* q, void* out_value);
 
-//void display(Queue* q);
-
 void destroyQueue(Queue* q);

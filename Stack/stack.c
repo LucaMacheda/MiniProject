@@ -53,26 +53,6 @@ void pop(Stack* s, void* out_value)
     s->top--;
 }
 
-/*void display(Stack* s)
-{
-    if(isEmpty(s))
-    {
-        printf("Empty stack!!!\n");
-        return;
-    }
-
-    printf("[");
-
-    for(int i = 0; i < s->top; i++)
-    {
-        void* result = (char*)s->stack + (i * s->element_size);
-        printf(" %p,",result);
-    }
-
-    printf(" %p",(char*)s->stack + (s->top * s->element_size));
-    printf("]\n");
-}*/
-
 void destroyStack(Stack* s)
 {
     free(s->stack);

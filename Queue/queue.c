@@ -71,32 +71,6 @@ void dequeue(Queue* q, void* out_value)
     q->count--;
 }
 
-/*void display(Queue* q)
-{
-    if (isEmpty(q))
-    {
-        printf("Empty queue\n");
-        return;
-    }
-
-    printf("[");
-
-    for (int i = 0; i < q->count; i++)
-    {
-        int index = (q->front + i) % q->size;
-        void* elem = (char*)q->data + (index * q->element_size);
-
-        printf(" %p",elem);
-
-        if (i < q->count - 1)
-        {
-            printf(", ");
-        }
-    }
-
-    printf("]\n");
-}*/
-
 void destroyQueue(Queue* q)
 {
     free(q->data);
