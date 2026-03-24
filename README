@@ -1,0 +1,148 @@
+Airport Simulation
+
+1. Case Explanation
+
+The aim of this project is to simulate an airport management system using three basic data structures: "Stack", "Queue", and "Deque".
+
+In this airport simulation, airplanes land and take off from an airport and must go through several steps. First, they request a landing, then they land safely, and eventually they take off again after being processed by the system.
+
+Each airplane is defined by:
+
+- Its ID
+- Its fuel level
+
+The fuel level is a very important attribute. An airplane is considered to be in an emergency if its fuel level is low (<= 2). In that case, the airplane must land immediately, before all other airplanes, which introduces a notion of priority in the system.
+
+The airport management system is a discrete time system. This means that the simulation progresses step by step. At each time unit, one of the following actions is performed:
+
+- A new airplane may arrive
+- A landing or a takeoff is performed
+- All actions are recorded
+
+This allows the system to simulate a realistic flow of airport activity.
+
+
+2. Data Structures Used
+
+2.1 Stack: History Management
+
+The Stack data structure is used to store all of the airport's history, including both landings and takeoffs.
+
+We use a stack because we want to access the most recent event first. This corresponds to a LIFO (Last In, First Out) behavior, which is exactly how a stack works.
+
+Operations used:
+
+- "push": store an event
+- "pop": retrieve an event
+
+This makes the stack well suited for tracking the sequence of operations.
+
+
+2.2 Queue: Takeoff Management
+
+The Queue is responsible for managing the planes awaiting takeoff.
+
+Planes need to take off in the same order as they landed. This is important to ensure fairness and realism in the simulation. The queue follows a FIFO (First In, First Out) behavior, which perfectly matches this requirement.
+
+The operations performed are:
+
+- "enqueue" → adds the plane to the queue
+- "dequeue" → handles the takeoff
+
+This guarantees that planes leave in the correct order.
+
+
+2.3 Deque: Landing Management
+
+The Deque is a Double-Ended Queue, and it is responsible for managing landing.
+
+We use a deque because some planes need priority (emergency), while others need to be handled in normal order. A deque allows insertion at both ends, which makes it ideal for this situation.
+
+Behavior:
+
+- Emergency → added to the front
+- Normal → added to the rear
+
+This enables both:
+
+- Priority handling
+- FIFO behavior for normal planes
+
+
+3. Implementation Details
+
+3.1 Generic Structures
+
+All data structures are implemented using "void*".
+
+This means that the structures are generic and can store any type of data. This makes the code reusable and flexible, which is an important design choice.
+
+
+3.2 Dynamic Memory Management
+
+Memory allocation and deallocation are handled using:
+
+- "malloc" for initial allocation
+- "realloc" for resizing
+- "free" for deallocation
+
+All data structures automatically resize when they become full, which ensures that the program can handle a growing number of airplanes without crashing.
+
+
+3.3 Circular Buffer (Queue & Deque)
+
+The Queue and Deque are implemented as circular arrays.
+
+This prevents memory wastage and allows efficient use of the allocated space. Instead of shifting elements, indices wrap around the array.
+
+Key formula:
+
+index = (index + 1) % size
+
+
+This ensures constant time operations.
+
+
+3.4 Dynamic Resizing
+
+When a data structure becomes full:
+
+- Its size is doubled
+- Memory is reallocated
+
+There is a special case when the structure is wrapped:
+
+- "front > rear"
+
+In this situation, the data is split into two parts. To fix this, elements are rearranged using "memmove", so that the structure becomes contiguous again after resizing.
+
+
+3.5 Simulation Algorithm
+
+At each time step:
+
+- A plane may arrive at random
+- If fuel <= 2 → emergency landing
+- Otherwise → normal landing
+- Landing is always done first
+- If landing is not required → takeoff
+- All operations are stored in history
+
+This algorithm ensures that priority is respected and that the simulation behaves realistically.
+
+
+5. How to Run
+
+Using Makefile:
+
+```bash
+make
+```
+
+Execution
+
+```bash
+./airport
+```
+
+MACHEDA Luca Claude
