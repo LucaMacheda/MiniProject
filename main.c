@@ -7,7 +7,7 @@
 typedef struct Plane
 {
     int id;
-    int fuel; // carburant (si bas = urgence)
+    int fuel;
 } Plane;
 
 void printPlane(Plane p)
@@ -29,17 +29,15 @@ int main()
 
     printf("=== AIRPORT SIMULATION START ===\n\n");
 
-    // 🔁 simulation sur 10 cycles
     for(int time = 1; time <= 20; time++)
     {
         printf("\n--- TIME %d ---\n", time);
 
-        // 🎲 nouvel avion arrive
         if(rand() % 2)
         {
             Plane p;
             p.id = plane_id++;
-            p.fuel = rand() % 10; // 0 → 9
+            p.fuel = rand() % 10;
 
             if(p.fuel <= 2)
             {
@@ -57,7 +55,6 @@ int main()
             }
         }
 
-        // 🎯 priorité : landing d'abord
         Plane current;
 
         if(!isEmptyDeque(&landing))
@@ -67,7 +64,6 @@ int main()
             printPlane(current);
             printf("\n");
 
-            // après atterrissage → va en takeoff queue
             enqueue(&takeoff, &current);
 
             push(&history, &current);
